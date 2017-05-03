@@ -27,15 +27,12 @@ extension UITextField
 {
     override open func layoutSubviews() {
         super.layoutSubviews()
-        let FieldEditor: AnyObject.Type = NSClassFromString("UIFieldEditor")!
-        let LabelLayer: AnyObject.Type = NSClassFromString("_UILabelLayer")!
         self.layer.sublayers?.forEach{
-            if ($0.delegate?.self.isKind(of: FieldEditor))! {
+            if let subs = $0.sublayers, subs.count>0 {
                 var f = $0.frame
                 f.origin.y = 0.0
                 $0.frame = f
-            }
-            if $0.self.isKind(of: LabelLayer) {
+            } else {
                 var layerFrame = CGRect.zero
                 layerFrame.origin = self.editingRect(forBounds: self.bounds).origin
                 layerFrame.size = self.editingRect(forBounds: self.bounds).size
